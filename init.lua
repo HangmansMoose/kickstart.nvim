@@ -1096,37 +1096,5 @@ vim.cmd 'hi LineNr guibg=NONE ctermbg=NONE'
 vim.cmd 'hi SignColumn guibg=NONE ctermbg=NONE'
 vim.cmd 'hi WinBar guibg=NONE ctermbg=NONE'
 
-local function build()
-  local current_dir = vim.fn.expand '%:p:h'
-  while true do
-    -- Construct the path to build.bat
-    local build_bat_path = current_dir .. '/build.bat'
-
-    -- Check if the file exists
-    local file = io.open(build_bat_path, 'r')
-    if file then
-      file:close() -- Close the file if it was opened successfully
-
-      -- Execute the build.bat file
-      local result = os.execute(build_bat_path)
-      if result then
-        print('Executed build.bat at: ' .. build_bat_path)
-      else
-        print('Failed to execute build.bat at: ' .. build_bat_path)
-      end
-      return build_bat_path -- Return the found path
-    end
-
-    -- Move up to the parent directory
-    local parent_dir = current_dir:match '^(.*)/'
-    if not parent_dir then
-      break -- Reached the root directory
-    end
-    current_dir = parent_dir
-  end
-
-  print 'build.bat not found.'
-end
-
-vim.keymap.set('n', '<leader>m', build(), { desc = 'execute build.bat' })
+vim.keymap.set('n', '<leader>m', '<cmd>!./build.bat', { desc = 'execute build.bat' })
 vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle file [E]xplorer tree' })

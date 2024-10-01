@@ -130,6 +130,8 @@ vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus'
 end)
 
+vim.opt.guifont = { "CaskaydiaCove NFM", "h14"}
+
 -- Enable break indent
 vim.opt.breakindent = true
 
@@ -955,6 +957,46 @@ require('lazy').setup {
   },
   {
     'morhetz/gruvbox',
+  },
+  {
+    'nvim-lualine/lualine.nvim',
+    name = 'lualine',
+    config = function()
+      local lualine_status, lualine = pcall(require, 'lualine')
+      local lualine_nightfly = require 'lualine.themes.nightfly'
+      local new_colors = {
+        blue = '#65d1ff',
+        green = '3effdc',
+        violet = '#ff61ef',
+        yellow = '#ffda7b',
+        black = '#000000',
+      }
+      lualine_nightfly.normal.a.bg = new_colors.yellow
+      lualine_nightfly.insert.a.bg = new_colors.yellow
+      lualine_nightfly.visual.a.bg = new_colors.green
+      lualine_nightfly.command = {
+        a = {
+          gui = 'bold',
+          bg = new_colors.yellow,
+          fg = new_colors.black,
+        },
+      }
+      lualine.setup {
+        options = {
+          theme = lualine_nightfly,
+          section_separators = '',
+          component_separators = '',
+        },
+        sections = {
+          lualine_c = {
+            {
+              'filename',
+              path = 3,
+            },
+          },
+        },
+      }
+    end,
   },
 
   -- Highlight todo, notes, etc in comments

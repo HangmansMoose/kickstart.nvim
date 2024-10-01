@@ -96,10 +96,6 @@ vim.g.have_nerd_font = true
 -- TODO: Just for gruvbox, need a better solution later
 vim.g.gruvbox_contrast_dark = 'hard'
 vim.g.gruvbox_italic = '0'
-vim.cmd 'hi Normal guibg=NONE ctermbg=NONE'
-vim.cmd 'hi LineNr guibg=NONE ctermbg=NONE'
-vim.cmd 'hi SignColumn guibg=NONE ctermbg=NONE'
-vim.cmd 'hi WinBar guibg=NONE ctermbg=NONE'
 vim.cmd 'set background=dark'
 
 -- highlight current cursor line
@@ -950,8 +946,12 @@ require('lazy').setup {
         black = '#000000',
       }
       lualine_nightfly.normal.a.bg = new_colors.yellow
+      lualine_nightfly.normal.b.bg = new_colors.black
+      lualine_nightfly.normal.c.bg = new_colors.black
       lualine_nightfly.insert.a.bg = new_colors.yellow
+      lualine_nightfly.insert.b.bg = new_colors.black
       lualine_nightfly.visual.a.bg = new_colors.green
+      lualine_nightfly.visual.b.bg = new_colors.black
       lualine_nightfly.command = {
         a = {
           gui = 'bold',
@@ -1091,5 +1091,8 @@ require('lazy').setup {
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
 vim.cmd 'colorscheme gruvbox'
-
+vim.cmd 'hi Normal guibg=NONE ctermbg=NONE'
+vim.cmd 'hi LineNr guibg=NONE ctermbg=NONE'
+vim.cmd 'hi SignColumn guibg=NONE ctermbg=NONE'
+vim.cmd 'hi WinBar guibg=NONE ctermbg=NONE'
 vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle file [E]xplorer tree' })

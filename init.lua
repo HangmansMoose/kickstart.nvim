@@ -91,7 +91,19 @@ vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
-vim.g.have_nerd_font = false
+vim.g.have_nerd_font = true
+
+-- TODO: Just for gruvbox, need a better solution later
+vim.g.gruvbox_baby_function_style = 'NONE'
+vim.g.gruvbox_baby_keyword_style = 'NONE'
+vim.g.gruvbox_baby_background_color = 'dark'
+vim.g.gruvbox_baby_comment_style = 'NONE'
+vim.g.gruvbox_contrast_dark = 'hard'
+vim.g.gruvbox_italic = '0'
+vim.cmd 'set background=dark'
+
+-- highlight current cursor line
+vim.opt.cursorline = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -102,7 +114,7 @@ vim.g.have_nerd_font = false
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -123,6 +135,9 @@ vim.opt.breakindent = true
 
 -- Save undo history
 vim.opt.undofile = true
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
@@ -156,6 +171,9 @@ vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.opt.termguicolors = true
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -227,7 +245,7 @@ vim.opt.rtp:prepend(lazypath)
 --    :Lazy update
 --
 -- NOTE: Here is where you install your plugins.
-require('lazy').setup({
+require('lazy').setup {
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
@@ -323,6 +341,36 @@ require('lazy').setup({
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       },
     },
+  },
+  {
+    'nvim-tree/nvim-tree.lua',
+    config = function()
+      require('nvim-tree').setup {
+        renderer = {
+          icons = {
+            glyphs = {
+              folder = {
+                arrow_closed = '📁', -- closed folder icon
+                arrow_open = '📂', -- open folder icon
+              },
+            },
+          },
+        },
+        actions = {
+          open_file = {
+            window_picker = {
+              enable = false,
+            },
+          },
+        },
+        filters = {
+          dotfiles = false,
+        },
+        git = {
+          ignore = false, -- show .gitignored files.
+        },
+      }
+    end,
   },
 
   -- NOTE: Plugins can specify dependencies.
@@ -605,10 +653,10 @@ require('lazy').setup({
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
       local servers = {
-        -- clangd = {},
+        clangd = {},
         -- gopls = {},
-        -- pyright = {},
-        -- rust_analyzer = {},
+        pyright = {}, -- note, needed to install node/npm for this plugin to successfully load
+        rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -626,6 +674,9 @@ require('lazy').setup({
             Lua = {
               completion = {
                 callSnippet = 'Replace',
+              },
+              diagnostics = {
+                globals = { 'vim' },
               },
               -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
               -- diagnostics = { disable = { 'missing-fields' } },
@@ -664,7 +715,6 @@ require('lazy').setup({
       }
     end,
   },
-
   { -- Autoformat
     'stevearc/conform.nvim',
     event = { 'BufWritePre' },
@@ -830,16 +880,81 @@ require('lazy').setup({
     --
     -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
     'folke/tokyonight.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
+    -- priority = 1000, -- Make sure to load this before all the other start plugins.
     init = function()
       -- Load the colorscheme here.
       -- Like many other themes, this one has different styles, and you could load
       -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-night'
+      -- vim.cmd.colorscheme 'tokyonight-night'
 
       -- You can configure highlights by doing something like:
       vim.cmd.hi 'Comment gui=none'
     end,
+  },
+  {
+    'Mofiqul/adwaita.nvim',
+    name = 'adwaita',
+    lazy = false,
+    priority = 1000,
+    config = function()
+      vim.g.adwaita_darker = true
+      -- vim.cmd('colorscheme adwaita')
+    end,
+  },
+  {
+    'alljokecake/naysayer-theme.nvim',
+    name = 'naysayer',
+    config = function()
+      require('naysayer').setup {
+        variant = 'main',
+        dark_variant = 'main',
+        disable_background = true,
+        disable_italics = true,
+      }
+    end,
+  },
+  {
+    'rebelot/kanagawa.nvim',
+    name = 'kanagawa',
+    priority = 1000,
+    config = function()
+      require('kanagawa').setup {
+        keywordStyle = { italic = false },
+        commentStyle = { italic = false },
+      }
+    end,
+  },
+  {
+    'tanvirtin/monokai.nvim',
+    name = 'monokai',
+    config = function()
+      require('monokai').setup {
+        italics = false,
+        palette = require('monokai').pro,
+      }
+    end,
+  },
+  {
+    'blazkowolf/gruber-darker.nvim',
+    name = 'gruber-darker',
+    config = function()
+      require('gruber-darker').setup {
+        bold = false,
+        italic = {
+          strings = false,
+          comments = false,
+          folds = false,
+        },
+        undercurl = true,
+        underline = false,
+      }
+    end,
+  },
+  {
+    'luisiacc/gruvbox-baby',
+  },
+  {
+    'morhetz/gruvbox',
   },
 
   -- Highlight todo, notes, etc in comments
@@ -888,7 +1003,7 @@ require('lazy').setup({
     main = 'nvim-treesitter.configs', -- Sets main module to use for opts
     -- [[ Configure Treesitter ]] See `:help nvim-treesitter`
     opts = {
-      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
+      ensure_installed = { 'bash', 'c', 'diff', 'html', 'lua', 'cpp', 'rust', 'luadoc', 'markdown', 'markdown_inline', 'query', 'vim', 'vimdoc' },
       -- Autoinstall languages that are not installed
       auto_install = true,
       highlight = {
@@ -920,17 +1035,18 @@ require('lazy').setup({
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.indent_line',
   -- require 'kickstart.plugins.lint',
-  -- require 'kickstart.plugins.autopairs',
-  -- require 'kickstart.plugins.neo-tree',
+  require 'kickstart.plugins.autopairs',
+  require 'kickstart.plugins.neo-tree',
   -- require 'kickstart.plugins.gitsigns', -- adds gitsigns recommend keymaps
 
+  --  vim.cmd("colorscheme kanagawa-dragon")
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
   --
   --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
   --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
   -- { import = 'custom.plugins' },
-}, {
+
   ui = {
     -- If you are using a Nerd Font: set icons to an empty table which will use the
     -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
@@ -950,7 +1066,10 @@ require('lazy').setup({
       lazy = '💤 ',
     },
   },
-})
+}
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
+vim.cmd 'colorscheme gruvbox'
+
+vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle file [E]xplorer tree' })

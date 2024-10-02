@@ -158,7 +158,7 @@ vim.opt.splitbelow = true
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
-vim.opt.list = true
+vim.opt.list = false
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- Preview substitutions live, as you type!
@@ -259,7 +259,10 @@ require('lazy').setup {
   --    require('gitsigns').setup({ ... })
   --
   -- See `:help gitsigns` to understand what the configuration keys do
-  { -- Adds git related signs to the gutter, as well as utilities for managing changes
+
+  -- NOTE: I am not a big fan of the git nonsense in the gutter so I am disabling it
+
+  --[[ { -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
       signs = {
@@ -270,7 +273,8 @@ require('lazy').setup {
         changedelete = { text = '~' },
       },
     },
-  },
+  },]]
+  --
 
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
@@ -653,9 +657,10 @@ require('lazy').setup {
               },
               diagnostics = {
                 globals = { 'vim' },
+                disable = { 'missing-fields' },
               },
               -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              -- diagnostics = { disable = { 'missing-fields' } },
+              --  diagnostics = { disable = { 'missing-fields' } },
             },
           },
         },
@@ -805,9 +810,9 @@ require('lazy').setup {
 
           -- If you prefer more traditional completion keymaps,
           -- you can uncomment the following lines
-          --['<CR>'] = cmp.mapping.confirm { select = true },
-          --['<Tab>'] = cmp.mapping.select_next_item(),
-          --['<S-Tab>'] = cmp.mapping.select_prev_item(),
+          ['<CR>'] = cmp.mapping.confirm { select = true },
+          ['<Tab>'] = cmp.mapping.select_next_item(),
+          ['<S-Tab>'] = cmp.mapping.select_prev_item(),
 
           -- Manually trigger a completion from nvim-cmp.
           --  Generally you don't need this, because nvim-cmp will display
@@ -1090,11 +1095,15 @@ require('lazy').setup {
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
-vim.cmd 'colorscheme gruvbox'
+vim.cmd 'colorscheme gruber-darker'
 vim.cmd 'hi Normal guibg=NONE ctermbg=NONE'
 vim.cmd 'hi LineNr guibg=NONE ctermbg=NONE'
 vim.cmd 'hi SignColumn guibg=NONE ctermbg=NONE'
 vim.cmd 'hi WinBar guibg=NONE ctermbg=NONE'
 
-vim.keymap.set('n', '<leader>m', '<cmd>!./build.bat', { desc = 'execute build.bat' })
+vim.cmd 'set nowrap'
+vim.cmd 'set signcolumn=no'
+vim.cmd 'set numberwidth=3'
+
+vim.keymap.set('n', '<leader>m', '<cmd>!build.bat<CR>', { desc = 'execute build.bat' })
 vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle file [E]xplorer tree' })

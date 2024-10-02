@@ -99,7 +99,7 @@ vim.g.gruvbox_italic = '0'
 vim.cmd 'set background=dark'
 
 -- highlight current cursor line
-vim.opt.cursorline = true
+-- vim.opt.cursorline = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -902,6 +902,18 @@ require('lazy').setup {
       require('kanagawa').setup {
         keywordStyle = { italic = false },
         commentStyle = { italic = false },
+        statementStyle = { bold = false },
+        transparent = true,
+        colors = {
+          theme = {
+            all = {
+              ui = {
+                bg_gutter = 'none',
+                bg_p2 = '#232323',
+              },
+            },
+          },
+        },
       }
     end,
   },
@@ -936,6 +948,18 @@ require('lazy').setup {
   },
   {
     'morhetz/gruvbox',
+  },
+  {
+    'rose-pine/neovim',
+    name = 'rose-pine',
+    config = function()
+      require('rose-pine').setup {
+        disable_background = true,
+        styles = {
+          italic = false,
+        },
+      }
+    end,
   },
   {
     'nvim-lualine/lualine.nvim',
@@ -1095,11 +1119,12 @@ require('lazy').setup {
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
-vim.cmd 'colorscheme gruber-darker'
+vim.cmd 'colorscheme kanagawa-dragon'
 vim.cmd 'hi Normal guibg=NONE ctermbg=NONE'
 vim.cmd 'hi LineNr guibg=NONE ctermbg=NONE'
 vim.cmd 'hi SignColumn guibg=NONE ctermbg=NONE'
 vim.cmd 'hi WinBar guibg=NONE ctermbg=NONE'
+vim.cmd 'hi @variable.builtin NONE' -- Stops highlighting of vim specific vars
 
 vim.cmd 'set nowrap'
 vim.cmd 'set signcolumn=no'

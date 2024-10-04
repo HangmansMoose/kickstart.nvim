@@ -92,6 +92,7 @@ vim.g.maplocalleader = ' '
 
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
+vim.opt.wrap = false
 
 -- TODO: Just for gruvbox, need a better solution later
 vim.g.gruvbox_contrast_dark = 'hard'
@@ -111,6 +112,8 @@ vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
 vim.opt.relativenumber = true
+-- This gets rid of the gutter
+vim.opt.statuscolumn = ''
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -126,7 +129,7 @@ vim.schedule(function()
   vim.opt.clipboard = 'unnamedplus'
 end)
 
-vim.opt.guifont = { 'CaskaydiaCove NFM', 'h14' }
+-- vim.opt.guifont = { 'CaskaydiaCove NFM', 'h12' }
 
 -- Enable break indent
 vim.opt.breakindent = true
@@ -172,6 +175,7 @@ vim.opt.scrolloff = 10
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
+vim.g.ezguifont = 'CaskaydiaCove NFM:h11'
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -245,7 +249,7 @@ vim.opt.rtp:prepend(lazypath)
 -- NOTE: Here is where you install your plugins.
 require('lazy').setup {
   -- NOTE: Plugins can be added with a link (or for a github repo: 'owner/repo' link).
-  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
+  --  'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
   -- NOTE: Plugins can also be added by using a table,
   -- with the first argument being the link and the following
@@ -259,7 +263,7 @@ require('lazy').setup {
   --    require('gitsigns').setup({ ... })
   --
   -- See `:help gitsigns` to understand what the configuration keys do
-  { -- Adds git related signs to the gutter, as well as utilities for managing changes
+  --[[ -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
       signs = {
@@ -270,7 +274,8 @@ require('lazy').setup {
         changedelete = { text = '~' },
       },
     },
-  },
+  },]]
+  --
 
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
@@ -1113,3 +1118,4 @@ vim.cmd 'hi WinBar guibg=NONE ctermbg=NONE'
 
 vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle file [E]xplorer tree' })
 vim.keymap.set('n', '<leader>m', '<cmd>!build.bat<CR>', { desc = 'execute build.bat' })
+vim.keymap.set('n', '<leader>vs', '<cmd>!debug.bat<CR>', { desc = 'execute debug.bat (launch visual studio with exe)' })

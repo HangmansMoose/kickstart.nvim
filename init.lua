@@ -99,7 +99,7 @@ vim.g.gruvbox_italic = '0'
 vim.cmd 'set background=dark'
 
 -- highlight current cursor line
--- vim.opt.cursorline = true
+vim.opt.cursorline = true
 
 -- [[ Setting options ]]
 -- See `:help vim.opt`
@@ -158,7 +158,7 @@ vim.opt.splitbelow = true
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
 --  and `:help 'listchars'`
-vim.opt.list = false
+vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- Preview substitutions live, as you type!
@@ -259,10 +259,7 @@ require('lazy').setup {
   --    require('gitsigns').setup({ ... })
   --
   -- See `:help gitsigns` to understand what the configuration keys do
-
-  -- NOTE: I am not a big fan of the git nonsense in the gutter so I am disabling it
-
-  --[[ { -- Adds git related signs to the gutter, as well as utilities for managing changes
+  { -- Adds git related signs to the gutter, as well as utilities for managing changes
     'lewis6991/gitsigns.nvim',
     opts = {
       signs = {
@@ -273,8 +270,7 @@ require('lazy').setup {
         changedelete = { text = '~' },
       },
     },
-  },]]
-  --
+  },
 
   -- NOTE: Plugins can also be configured to run Lua code when they are loaded.
   --
@@ -660,7 +656,7 @@ require('lazy').setup {
                 disable = { 'missing-fields' },
               },
               -- You can toggle below to ignore Lua_LS's noisy `missing-fields` warnings
-              --  diagnostics = { disable = { 'missing-fields' } },
+              -- diagnostics = { disable = { 'missing-fields' } },
             },
           },
         },
@@ -895,6 +891,17 @@ require('lazy').setup {
     end,
   },
   {
+    'arturgoms/moonbow.nvim',
+    name = 'moonbow',
+    config = function()
+      require('moonbow').setup {
+        italic = false,
+        underline = false,
+        strikethrough = false,
+      }
+    end,
+  },
+  {
     'rebelot/kanagawa.nvim',
     name = 'kanagawa',
     priority = 1000,
@@ -902,18 +909,6 @@ require('lazy').setup {
       require('kanagawa').setup {
         keywordStyle = { italic = false },
         commentStyle = { italic = false },
-        statementStyle = { bold = false },
-        transparent = true,
-        colors = {
-          theme = {
-            all = {
-              ui = {
-                bg_gutter = 'none',
-                bg_p2 = '#232323',
-              },
-            },
-          },
-        },
       }
     end,
   },
@@ -933,6 +928,7 @@ require('lazy').setup {
     config = function()
       require('gruber-darker').setup {
         bold = false,
+        invert = {},
         italic = {
           strings = false,
           comments = false,
@@ -950,18 +946,6 @@ require('lazy').setup {
     'morhetz/gruvbox',
   },
   {
-    'rose-pine/neovim',
-    name = 'rose-pine',
-    config = function()
-      require('rose-pine').setup {
-        disable_background = true,
-        styles = {
-          italic = false,
-        },
-      }
-    end,
-  },
-  {
     'nvim-lualine/lualine.nvim',
     name = 'lualine',
     config = function()
@@ -974,10 +958,12 @@ require('lazy').setup {
         yellow = '#ffda7b',
         black = '#000000',
       }
-      lualine_nightfly.normal.a.bg = new_colors.yellow
+      lualine_nightfly.normal.a.bg = new_colors.black
+      lualine_nightfly.normal.a.fg = new_colors.yellow
       lualine_nightfly.normal.b.bg = new_colors.black
       lualine_nightfly.normal.c.bg = new_colors.black
-      lualine_nightfly.insert.a.bg = new_colors.yellow
+      lualine_nightfly.insert.a.bg = new_colors.black
+      lualine_nightfly.insert.a.fg = new_colors.yellow
       lualine_nightfly.insert.b.bg = new_colors.black
       lualine_nightfly.visual.a.bg = new_colors.green
       lualine_nightfly.visual.b.bg = new_colors.black
@@ -1119,16 +1105,11 @@ require('lazy').setup {
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
-vim.cmd 'colorscheme kanagawa-dragon'
+vim.cmd 'colorscheme moonbow'
 vim.cmd 'hi Normal guibg=NONE ctermbg=NONE'
 vim.cmd 'hi LineNr guibg=NONE ctermbg=NONE'
 vim.cmd 'hi SignColumn guibg=NONE ctermbg=NONE'
 vim.cmd 'hi WinBar guibg=NONE ctermbg=NONE'
-vim.cmd 'hi @variable.builtin NONE' -- Stops highlighting of vim specific vars
 
-vim.cmd 'set nowrap'
-vim.cmd 'set signcolumn=no'
-vim.cmd 'set numberwidth=3'
-
-vim.keymap.set('n', '<leader>m', '<cmd>!build.bat<CR>', { desc = 'execute build.bat' })
 vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle file [E]xplorer tree' })
+vim.keymap.set('n', '<leader>m', '<cmd>!build.bat<CR>', { desc = 'execute build.bat' })

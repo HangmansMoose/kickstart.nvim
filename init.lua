@@ -83,6 +83,17 @@ I hope you enjoy your Neovim journey,
 
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
+-- NEOVIDE NONSENSE
+
+if vim.g.neovide then
+  -- Turn off cursor stupidity that no one wants
+  vim.g.neovide_cursor_animation_length = 0
+  vim.g.neovide_cursor_trail_size = 0
+  vim.g.neovide_cursor_animate_command_line = false
+  vim.g.neovide_scroll_animation_length = 0
+  vim.g.neovide_position_animation_length = 0
+  vim.o.guifont = 'CaskaydiaMono_Nerd_Font:h13'
+end
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
@@ -160,9 +171,11 @@ vim.opt.splitbelow = true
 
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
---  and `:help 'listchars'`
-vim.opt.list = true
-vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
+--  and `:help 'listchars'
+--  NOTE:Will probably want to turn these back on when using python
+
+--vim.opt.list = true
+--vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
 -- Preview substitutions live, as you type!
 vim.opt.inccommand = 'split'

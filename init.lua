@@ -93,6 +93,9 @@ if vim.g.neovide then
   vim.g.neovide_scroll_animation_length = 0
   vim.g.neovide_position_animation_length = 0
   vim.o.guifont = 'CaskaydiaMono_Nerd_Font:h13'
+  vim.g.neovide_transparency = 0.8
+  vim.g.neovide_remember_window_size = true
+  --vim.g.neovide_fullscreen = true
 end
 
 -- Set <space> as the leader key

@@ -92,8 +92,8 @@ if vim.g.neovide then
   vim.g.neovide_cursor_animate_command_line = false
   vim.g.neovide_scroll_animation_length = 0
   vim.g.neovide_position_animation_length = 0
-  vim.o.guifont = 'CaskaydiaMono_Nerd_Font:h13'
-  vim.g.neovide_transparency = 0.8
+  vim.o.guifont = 'CaskaydiaMono_Nerd_Font:h12'
+  vim.g.neovide_transparency = 0.95
   vim.g.neovide_remember_window_size = true
   --vim.g.neovide_fullscreen = true
 end
@@ -191,7 +191,6 @@ vim.opt.scrolloff = 10
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
-vim.g.ezguifont = 'CaskaydiaCove NFM:h11'
 
 -- [[ Basic Keymaps ]]
 --  See `:help vim.keymap.set()`
@@ -368,10 +367,10 @@ require('lazy').setup {
         renderer = {
           icons = {
             glyphs = {
-              folder = {
-                arrow_closed = '📁', -- closed folder icon
-                arrow_open = '📂', -- open folder icon
-              },
+              --  folder = {
+              --   arrow_closed = '📁', -- closed folder icon
+              --   arrow_open = '📂', -- open folder icon
+              -- },
             },
           },
         },
@@ -930,6 +929,11 @@ require('lazy').setup {
       require('kanagawa').setup {
         keywordStyle = { italic = false },
         commentStyle = { italic = false },
+        overrides = function()
+          return {
+            ['@variable.builtin'] = { italic = false },
+          }
+        end,
       }
     end,
   },

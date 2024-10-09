@@ -1,5 +1,42 @@
 # kickstart.nvim
 
+# Plugins used (08-Oct-24)
+* Lazy.nvim
+* nvim-tree/nvim-tree.lua
+* rebelot/kanagawa.nvim
+* morehetz/gruvbox
+* folke/which-key.nvim
+* nvim-telescope/telescope.nvim
+* nvim-telescope/telescope-ui-select.nvim
+* nvim-tree/nvim-web-devicons
+* folke/lazydev.nvim
+* neovim/nvim-lspconfig
+* williamboman/mason.nvim
+* williamboman/mason-lspconfig.nvim
+* WhoIsSethDaniel/mason-tool-installer.nvim
+* j-hui/fidget.nvim
+* hrsh7th/cmp-nvim-lsp
+* stevearc/conform.nvim
+* hrsh7th/nvim-cmp
+* L3MON4D3/LuaSnip
+* saadparwaz1/cmp_luasnip
+* hrsh7th/cmp-nvim-lsp
+* hrsh7th/cmp-path
+* folke/tokyonight.nvim
+* Mofiqul/adwaita.nvim
+* alljokecake/naysayer-theme.nvim
+* arturgoms/moonbow.nvim
+* tanvirtin/monkai.nvim
+* blazkowolf/gruber-darker.nvim
+* nvim-lualine/lualine.nvim
+* folke/todo-comments.nvim
+* echasnovski/mini.nvim
+* nvim-treesitter/nvim-treesitter
+
+
+
+
+
 ## Introduction
 
 A starting point for Neovim that is:

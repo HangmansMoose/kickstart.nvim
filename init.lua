@@ -93,7 +93,7 @@ if vim.g.neovide then
   vim.g.neovide_scroll_animation_length = 0
   vim.g.neovide_position_animation_length = 0
   vim.o.guifont = 'CaskaydiaMono_Nerd_Font:h12'
-  vim.g.neovide_transparency = 0.95
+  vim.g.neovide_transparency = 1
   vim.g.neovide_remember_window_size = true
   --vim.g.neovide_fullscreen = true
 end
@@ -907,6 +907,9 @@ require('lazy').setup {
         dark_variant = 'main',
         disable_background = true,
         disable_italics = true,
+        highlight_groups = {
+          bg = '#161616',
+        },
       }
     end,
   },
@@ -929,6 +932,17 @@ require('lazy').setup {
       require('kanagawa').setup {
         keywordStyle = { italic = false },
         commentStyle = { italic = false },
+        colors = {
+          theme = {
+            dragon = {
+              ui = {
+                bg_gutter = '#161616',
+                bg_p2 = '#252525',
+                pmenu = { bg = '#161616' },
+              },
+            },
+          },
+        },
         overrides = function()
           return {
             ['@variable.builtin'] = { italic = false },

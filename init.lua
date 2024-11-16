@@ -92,7 +92,7 @@ if vim.g.neovide then
   vim.g.neovide_cursor_animate_command_line = false
   vim.g.neovide_scroll_animation_length = 0
   vim.g.neovide_position_animation_length = 0
-  vim.o.guifont = 'Monaspace_Argon_Var:h12'
+  vim.o.guifont = 'CaskaydiaMono_Nerd_Font_Mono:h14'
   vim.o.guicursor =
     'n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175'
   vim.g.neovide_transparency = 1
@@ -109,11 +109,6 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 vim.opt.wrap = false
-
--- TODO: Just for gruvbox, need a better solution later
-vim.g.gruvbox_contrast_dark = 'hard'
-vim.g.gruvbox_italic = '0'
-vim.cmd 'set background=dark'
 
 -- highlight current cursor line
 vim.opt.cursorline = true
@@ -874,6 +869,10 @@ require('lazy').setup {
       end,
     },
     {
+      '2giosangmitom/nightfall.nvim',
+      name = 'nightfall',
+    },
+    {
       'alljokecake/naysayer-theme.nvim',
       name = 'naysayer',
       config = function()
@@ -897,12 +896,25 @@ require('lazy').setup {
           underline = false,
           strikethrough = false,
           colors = {
+            Normal = {
+              bg = '#141414',
+            },
             CursorLine = {
-              bg = '#111144',
+              bg = '#222222',
             },
           },
         }
       end,
+    },
+    {
+      'Shatur/neovim-ayu',
+      name = 'ayu',
+    },
+    {
+      'rktjmp/lush.nvim',
+    },
+    {
+      'RishabhRD/gruvy',
     },
     {
       'rebelot/kanagawa.nvim',
@@ -923,11 +935,11 @@ require('lazy').setup {
               },
               wave = {
                 ui = {
-                  --    bg_gutter = '#161616',
-                  --  bg = '#161616',
-                  --    fg = '#c5c9c5',
-                  --    pmenu = { fg = '#c5c9c5', bg = '#161616' },
-                  --    float = { fg = '#c5c9c5', bg = '#161616' },
+                  bg_gutter = '#161616',
+                  bg = '#161616',
+                  fg = '#c5c9c5',
+                  pmenu = { fg = '#c5c9c5', bg = '#161616' },
+                  float = { fg = '#c5c9c5', bg = '#161616' },
                 },
               },
             },
@@ -938,6 +950,15 @@ require('lazy').setup {
             }
           end,
         }
+      end,
+    },
+    {
+      'sainnhe/sonokai',
+      config = function()
+        --vim.g.sonokai_style = 'Default'
+        vim.g.sonokai_better_performance = 1
+        vim.g.sonokai_enable_italic = false
+        vim.g.sonokai_colors_override = { bg0 = { '#141414', '232' } }
       end,
     },
     {
@@ -987,6 +1008,33 @@ require('lazy').setup {
     {
       'sho-87/kanagawa-paper.nvim',
       name = 'kanagawa-paper',
+      config = function()
+        require('kanagawa-paper').setup {
+          undercurl = true,
+          transparent = false,
+          gutter = false,
+          dimInactive = true, -- disabled when transparent
+          terminalColors = true,
+          commentStyle = { italic = false },
+          functionStyle = { italic = false },
+          keywordStyle = { italic = false, bold = false },
+          statementStyle = { italic = false, bold = false },
+          typeStyle = { italic = false },
+          colors = {
+            theme = {
+              ui = {
+                bg = '#161616',
+                bg_cursorline = '#111144',
+                bg_p1 = '#161616',
+                bg_p2 = '#161616',
+              },
+              float = { bg = '#161616' },
+              pmenu = { bg = '#161616', bg_sbar = '#161616' },
+            },
+            palette = {},
+          }, -- override default palette and theme colors
+        }
+      end,
     },
     {
       'savq/melange-nvim',
@@ -1007,7 +1055,7 @@ require('lazy').setup {
           green = '3effdc',
           violet = '#ff61ef',
           yellow = '#ffda7b',
-          black = '#000000',
+          black = '#161616',
         }
         lualine_nightfly.normal.a.bg = new_colors.black
         lualine_nightfly.normal.a.fg = new_colors.yellow
@@ -1109,6 +1157,10 @@ require('lazy').setup {
       --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
     },
 
+    {
+      'equalsraf/neovim-gui-shim',
+    },
+
     -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
     -- init.lua. If you want these files, they are in the repository, so you can just download them and
     -- place them in the correct locations.
@@ -1156,13 +1208,15 @@ require('lazy').setup {
 }
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
-vim.cmd 'colorscheme monokai'
-vim.api.nvim_set_hl(0, 'Cursor', { fg = '#00ff33', bg = '#00ff33' })
-vim.cmd 'hi Normal guibg=NONE ctermbg=NONE'
-vim.cmd 'hi LineNr guibg=NONE ctermbg=NONE'
-vim.cmd 'hi SignColumn guibg=NONE ctermbg=NONE'
-vim.cmd 'hi WinBar guibg=NONE ctermbg=NONE'
+vim.cmd 'colorscheme kanagawa-paper'
+vim.cmd 'hi Cursor guifg=#00ff33 guibg=#00ff33 ctermfg=GREEN ctermbg=GREEN'
+-- vim.cmd 'hi CursorLine guibg=#222222 ctermbg=grey'
+-- vim.api.nvim_set_hl(0, 'Cursor', { fg = '#00ff33', bg = '#00ff33' })
+-- vim.cmd 'hi Normal guibg=NONE ctermbg=NONE'
+vim.cmd 'hi LineNr guifg=#5c554a ctermbg=NONE'
+-- vim.cmd 'hi SignColumn guibg=NONE ctermbg=NONE'
+--vim.cmd 'hi WinBar guibg=NONE ctermbg=NONE'
 
-vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle file [E]xplorer tree' })
+vim.keymap.set('n', '<leader>e', '<cmd>Neotree<CR>', { desc = 'Toggle file [E]xplorer tree' })
 vim.keymap.set('n', '<leader>m', '<cmd>!build.bat<CR>', { desc = 'execute build.bat' })
 vim.keymap.set('n', '<leader>vs', '<cmd>!debug.bat<CR>', { desc = 'execute debug.bat (launch visual studio with exe)' })

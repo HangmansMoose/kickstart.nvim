@@ -85,20 +85,23 @@ P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 -- NEOVIDE NONSENSE
 
-if vim.g.neovide then
+if vim.g.neovide or vim.g.nvy then
   -- Turn off cursor stupidity that no one wants
   vim.g.neovide_cursor_animation_length = 0
   vim.g.neovide_cursor_trail_size = 0
   vim.g.neovide_cursor_animate_command_line = false
   vim.g.neovide_scroll_animation_length = 0
   vim.g.neovide_position_animation_length = 0
-  vim.o.guifont = 'CaskaydiaMono_Nerd_Font_Mono:h14'
-  vim.o.guicursor =
-    'n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175'
-  vim.g.neovide_transparency = 1
+  vim.o.guifont = 'CaskaydiaMono_Nerd_Font_Mono:h13'
+  -- vim.g.neovide_transparency = 1
   vim.g.neovide_remember_window_size = true
   --vim.g.neovide_fullscreen = true
 end
+
+-- This is here because wezterm needs this for the cursor to continue to blink inside of neovim. Wez thinks this is due to how neovim is treating wezterm and not a wezterm issue.
+
+vim.o.guicursor =
+  'n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175'
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
@@ -168,6 +171,8 @@ vim.opt.timeoutlen = 300
 -- Configure how new splits should be opened
 vim.opt.splitright = true
 vim.opt.splitbelow = true
+
+vim.o.background = 'dark'
 
 -- Sets how neovim will display certain whitespace characters in the editor.
 --  See `:help 'list'`
@@ -356,6 +361,36 @@ require('lazy').setup {
         { '<leader>h', group = 'Git [H]unk', mode = { 'n', 'v' } },
       },
     },
+  },
+  {
+    'nvim-tree/nvim-tree.lua',
+    config = function()
+      require('nvim-tree').setup {
+        renderer = {
+          icons = {
+            glyphs = {
+              folder = {
+                arrow_closed = '📁', -- closed folder icon
+                arrow_open = '📂', -- open folder icon
+              },
+            },
+          },
+        },
+        actions = {
+          open_file = {
+            window_picker = {
+              enable = false,
+            },
+          },
+        },
+        filters = {
+          dotfiles = false,
+        },
+        git = {
+          ignore = false, -- show .gitignored files.
+        },
+      }
+    end,
   },
   {
 
@@ -871,6 +906,11 @@ require('lazy').setup {
     {
       '2giosangmitom/nightfall.nvim',
       name = 'nightfall',
+      lazy = false,
+      priority = 1000,
+      config = function()
+        require('nightfall').setup {}
+      end,
     },
     {
       'alljokecake/naysayer-theme.nvim',
@@ -895,20 +935,13 @@ require('lazy').setup {
           italic = false,
           underline = false,
           strikethrough = false,
-          colors = {
-            Normal = {
-              bg = '#141414',
-            },
-            CursorLine = {
-              bg = '#222222',
-            },
+          values = {
+            bg = '#141414',
+            gutter_normal = '#141414',
+            gutter_active = '#141414',
           },
         }
       end,
-    },
-    {
-      'Shatur/neovim-ayu',
-      name = 'ayu',
     },
     {
       'rktjmp/lush.nvim',
@@ -1037,12 +1070,44 @@ require('lazy').setup {
       end,
     },
     {
+      'ellisonleao/gruvbox.nvim',
+      priority = 1000,
+      name = 'gruvbox',
+      config = function()
+        require('gruvbox').setup {
+          terminal_colors = true,
+          transparent_mode = false,
+          undercurl = false,
+          uderline = false,
+          bold = false,
+          italic = {
+            strings = false,
+            emphasis = false,
+            comments = false,
+            folds = false,
+          },
+          palette_overrides = {
+            dark0 = '#050505',
+            dark0_hard = '#050505',
+            dark1 = '#050505',
+          },
+        }
+      end,
+    },
+    {
       'savq/melange-nvim',
       name = 'melange',
     },
     {
       'Everblush/nvim',
       name = 'Everblush',
+    },
+    {
+      'Shatur/neovim-ayu',
+      name = 'ayu',
+      config = function()
+        require('ayu').setup {}
+      end,
     },
     {
       'nvim-lualine/lualine.nvim',
@@ -1055,7 +1120,7 @@ require('lazy').setup {
           green = '3effdc',
           violet = '#ff61ef',
           yellow = '#ffda7b',
-          black = '#161616',
+          black = '#050505',
         }
         lualine_nightfly.normal.a.bg = new_colors.black
         lualine_nightfly.normal.a.fg = new_colors.yellow
@@ -1075,6 +1140,7 @@ require('lazy').setup {
         }
         require('lualine').setup {
           options = {
+            globalstatus = true,
             theme = lualine_nightfly,
             section_separators = '',
             component_separators = '',
@@ -1208,15 +1274,14 @@ require('lazy').setup {
 }
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
-vim.cmd 'colorscheme kanagawa-paper'
-vim.cmd 'hi Cursor guifg=#00ff33 guibg=#00ff33 ctermfg=GREEN ctermbg=GREEN'
+-- vim.api.nvim_set_hl(0, 'Cursor', { ctermfg = 'GREY', ctermbg = 'GREEN', fg = '#00ff33', bg = '#00ff33' })
+-- vim.api.nvim_set_hl(0, 'SignColumn', { bg = '#141414', ctermbg = 'BLACK' })
+vim.cmd 'colorscheme gruvbox'
 -- vim.cmd 'hi CursorLine guibg=#222222 ctermbg=grey'
--- vim.api.nvim_set_hl(0, 'Cursor', { fg = '#00ff33', bg = '#00ff33' })
 -- vim.cmd 'hi Normal guibg=NONE ctermbg=NONE'
-vim.cmd 'hi LineNr guifg=#5c554a ctermbg=NONE'
+-- vim.cmd 'hi LineNr guifg=#5c554a ctermbg=NONE'
 -- vim.cmd 'hi SignColumn guibg=NONE ctermbg=NONE'
---vim.cmd 'hi WinBar guibg=NONE ctermbg=NONE'
-
-vim.keymap.set('n', '<leader>e', '<cmd>Neotree<CR>', { desc = 'Toggle file [E]xplorer tree' })
+-- vim.cmd 'hi WinBar guibg=NONE ctermbg=NONE'
+vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle file [E]xplorer tree' })
 vim.keymap.set('n', '<leader>m', '<cmd>!build.bat<CR>', { desc = 'execute build.bat' })
 vim.keymap.set('n', '<leader>vs', '<cmd>!debug.bat<CR>', { desc = 'execute debug.bat (launch visual studio with exe)' })

@@ -190,8 +190,8 @@ vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_netrw = 0
+vim.g.loaded_netrwPlugin = 0
 vim.opt.termguicolors = true
 
 -- [[ Basic Keymaps ]]
@@ -944,12 +944,6 @@ require('lazy').setup {
       end,
     },
     {
-      'rktjmp/lush.nvim',
-    },
-    {
-      'RishabhRD/gruvy',
-    },
-    {
       'rebelot/kanagawa.nvim',
       name = 'kanagawa',
       priority = 1000,
@@ -961,18 +955,20 @@ require('lazy').setup {
             theme = {
               dragon = {
                 ui = {
-                  bg_gutter = '#161616',
+                  bg = '#141414',
+                  bg_gutter = '#141414',
                   bg_p2 = '#111144', -- this controls current line colour
-                  pmenu = { bg = '#161616' },
+                  pmenu = { bg = '#141414' },
                 },
               },
               wave = {
                 ui = {
-                  bg_gutter = '#161616',
-                  bg = '#161616',
-                  fg = '#c5c9c5',
-                  pmenu = { fg = '#c5c9c5', bg = '#161616' },
-                  float = { fg = '#c5c9c5', bg = '#161616' },
+                  bg_gutter = '#141414',
+                  bg = '#141414',
+                  bg_p2 = '#111144',
+                  fg_reverse = '#DCD7BA',
+                  pmenu = { fg = '#c5c9c5', bg = '#181818' },
+                  float = { fg = '#c5c9c5', bg = '#181818' },
                 },
               },
             },
@@ -986,11 +982,32 @@ require('lazy').setup {
       end,
     },
     {
+      'AlexvZyl/nordic.nvim',
+      name = 'nordic',
+      priority = 1000,
+      config = function()
+        require('nordic').setup {
+          palette = require 'nordic.colors',
+          italic_comments = false,
+          on_palette = function(palette)
+            palette.black1 = '#161616'
+          end,
+          on_highlight = function(highlights, palette)
+            for _, highlight in pairs(highlights) do
+              highlight.italic = false
+            end
+          end,
+          swap_backgrounds = true,
+        }
+      end,
+    },
+    {
       'sainnhe/sonokai',
       config = function()
         --vim.g.sonokai_style = 'Default'
         vim.g.sonokai_better_performance = 1
         vim.g.sonokai_enable_italic = false
+        vim.g.sonokai_disable_italic_comment = true
         vim.g.sonokai_colors_override = { bg0 = { '#141414', '232' } }
       end,
     },
@@ -1035,6 +1052,9 @@ require('lazy').setup {
           code_style = {
             comments = 'none',
           },
+          colors = {
+            bg0 = '#121212',
+          },
         }
       end,
     },
@@ -1056,13 +1076,14 @@ require('lazy').setup {
           colors = {
             theme = {
               ui = {
-                bg = '#161616',
+                bg = '#141414',
                 bg_cursorline = '#111144',
-                bg_p1 = '#161616',
-                bg_p2 = '#161616',
+                bg_p1 = '#141414',
+                bg_p2 = '#141414',
+                bg_dim = '#141414',
               },
-              float = { bg = '#161616' },
-              pmenu = { bg = '#161616', bg_sbar = '#161616' },
+              float = { bg = '#141414' },
+              pmenu = { bg = '#141414', bg_sbar = '#141414' },
             },
             palette = {},
           }, -- override default palette and theme colors
@@ -1087,26 +1108,55 @@ require('lazy').setup {
             folds = false,
           },
           palette_overrides = {
-            dark0 = '#050505',
-            dark0_hard = '#050505',
-            dark1 = '#050505',
+            dark0 = '#121212',
+            dark0_hard = '#121212',
+            dark1 = '#121212',
           },
         }
       end,
     },
     {
-      'savq/melange-nvim',
-      name = 'melange',
-    },
-    {
-      'Everblush/nvim',
-      name = 'Everblush',
-    },
-    {
-      'Shatur/neovim-ayu',
-      name = 'ayu',
+      'catppuccin/nvim',
+      priority = 1000,
+      name = 'catppuccin',
       config = function()
-        require('ayu').setup {}
+        require('catppuccin').setup {
+          flavour = 'mocha', -- latte, frappe, macchiato, mocha
+          term_colors = true,
+          transparent_background = false,
+          no_italic = false,
+          no_bold = false,
+          styles = {
+            comments = {},
+            conditionals = {},
+            loops = {},
+            functions = {},
+            keywords = {},
+            strings = {},
+            variables = {},
+            numbers = {},
+            booleans = {},
+            properties = {},
+            types = {},
+          },
+          color_overrides = {
+            mocha = {
+              base = '#111111',
+              mantle = '#1d2021',
+              crust = '#1d2021',
+            },
+          },
+          highlight_overrides = {
+            mocha = function(C)
+              return {
+                TabLineSel = { bg = C.pink },
+                CmpBorder = { fg = C.surface2 },
+                Pmenu = { bg = C.none },
+                TelescopeBorder = { link = 'FloatBorder' },
+              }
+            end,
+          },
+        }
       end,
     },
     {
@@ -1120,7 +1170,7 @@ require('lazy').setup {
           green = '3effdc',
           violet = '#ff61ef',
           yellow = '#ffda7b',
-          black = '#050505',
+          black = '#161616',
         }
         lualine_nightfly.normal.a.bg = new_colors.black
         lualine_nightfly.normal.a.fg = new_colors.yellow
@@ -1222,9 +1272,21 @@ require('lazy').setup {
       --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
       --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
     },
+    {
+      'rebelot/terminal.nvim',
+      name = 'terminal',
+      config = function()
+        require('terminal').setup {
+          cmd = { 'pwsh -NoLogo -File C:/tools/vcvars_powershell.ps1' },
+        }
+      end,
+    },
 
     {
       'equalsraf/neovim-gui-shim',
+    },
+    {
+      'mg979/vim-visual-multi',
     },
 
     -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
@@ -1272,16 +1334,49 @@ require('lazy').setup {
     },
   },
 }
+
+-- Here is the build functionality
+vim.api.nvim_create_autocmd('TermOpen', {
+  group = vim.api.nvim_create_augroup('custom-term-open', { clear = true }),
+  callback = function()
+    vim.opt.number = false
+    vim.opt.relativenumber = false
+  end,
+})
+
+local job_id = 0
+vim.keymap.set('n', '<leader>st', function()
+  vim.cmd.vnew()
+  vim.cmd.term()
+  vim.cmd.wincmd 'J'
+  vim.api.nvim_win_set_height(0, 5)
+
+  job_id = vim.bo.channel
+end)
+
+vim.keymap.set('n', '<leader>bb', function()
+  vim.cmd.vnew()
+  vim.cmd.term()
+  vim.wincmd 'J'
+  vim.api.nvim_win_set_height(0, 5)
+  local chan = vim.bo.channel
+  vim.fn.chansend(chan, { 'build.bat\n' })
+end)
+
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
--- vim.api.nvim_set_hl(0, 'Cursor', { ctermfg = 'GREY', ctermbg = 'GREEN', fg = '#00ff33', bg = '#00ff33' })
+vim.api.nvim_set_hl(0, 'Cursor', { ctermfg = 'GREY', ctermbg = 'GREEN', fg = '#303030', bg = '#00ff33' })
+
+--vim.cmd 'hi LineNrAbove guifg=#C8C093'
+--vim.cmd 'hi LineNr guifg=#c5c9c5'
+--vim.cmd 'hi LineNrBelow guifg=#C8C093'
 -- vim.api.nvim_set_hl(0, 'SignColumn', { bg = '#141414', ctermbg = 'BLACK' })
-vim.cmd 'colorscheme gruvbox'
--- vim.cmd 'hi CursorLine guibg=#222222 ctermbg=grey'
+vim.cmd 'colorscheme sonokai'
+vim.cmd 'hi Cursor guifg=#303030 guibg=#00ff33'
 -- vim.cmd 'hi Normal guibg=NONE ctermbg=NONE'
--- vim.cmd 'hi LineNr guifg=#5c554a ctermbg=NONE'
+vim.cmd 'hi LineNr guifg=#4a4840 ctermbg=NONE'
 -- vim.cmd 'hi SignColumn guibg=NONE ctermbg=NONE'
 -- vim.cmd 'hi WinBar guibg=NONE ctermbg=NONE'
 vim.keymap.set('n', '<leader>e', '<cmd>NvimTreeToggle<CR>', { desc = 'Toggle file [E]xplorer tree' })
-vim.keymap.set('n', '<leader>m', '<cmd>!build.bat<CR>', { desc = 'execute build.bat' })
+-- vim.keymap.set('n', '<leader>bb', Build, { desc = 'execute build.bat' })
 vim.keymap.set('n', '<leader>vs', '<cmd>!debug.bat<CR>', { desc = 'execute debug.bat (launch visual studio with exe)' })

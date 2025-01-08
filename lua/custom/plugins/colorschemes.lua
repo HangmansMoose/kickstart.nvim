@@ -1,5 +1,19 @@
 return {
   {
+	'lewpoly/sherbet.nvim',
+	name = 'sherbet',
+	lazy = false,
+	priority = 1000,
+	config = function()
+		vim.g.sherbet_italic_keywords = false
+		vim.g.sherbet_italic_comments = false
+		vim.g.sherbet_italic_loops = false
+		vim.g.sherbet_italic_conditionals = false
+		require('sherbet').setup {
+		}
+	end,
+  },
+  {
     'Mofiqul/adwaita.nvim',
     name = 'adwaita',
     lazy = false,
@@ -15,7 +29,12 @@ return {
     lazy = false,
     priority = 1000,
     config = function()
-      require('nightfall').setup {}
+      require('nightfall').setup {
+	    styles = {
+		    comments = { italic = false },
+		    keywords = { italic = false }
+		}
+	}
     end,
   },
   {
@@ -61,20 +80,17 @@ return {
           theme = {
             dragon = {
               ui = {
-                bg = '#141414',
-                bg_gutter = '#141414',
+                bg = '#161616',
+                bg_gutter = '#161616',
                 bg_p2 = '#111144', -- this controls current line colour
-                pmenu = { bg = '#141414' },
               },
             },
             wave = {
               ui = {
-                bg_gutter = '#141414',
-                bg = '#141414',
+                bg_gutter = '#181818',
+                bg = '#181818',
                 bg_p2 = '#111144',
                 fg_reverse = '#DCD7BA',
-                pmenu = { fg = '#c5c9c5', bg = '#181818' },
-                float = { fg = '#c5c9c5', bg = '#181818' },
               },
             },
           },
@@ -88,6 +104,32 @@ return {
     end,
   },
   {
+	'rockyzhang24/arctic.nvim',
+	name = 'arctic',
+	dependencies = { "rktjmp/lush.nvim" },
+	priority = 1000,
+  },
+  {
+	'nyngwang/nvimgelion',
+	priority = 1000,
+	config = function()
+	end,
+  },
+  {
+	'rose-pine/neovim',
+	name = 'rose-pine',
+	priority = 1000,
+	config = function()
+		require('rose-pine').setup {
+		  variant = 'main',
+		  styles = {
+			italic = false
+		  }
+
+		}
+	end,
+  },
+  {
     'AlexvZyl/nordic.nvim',
     name = 'nordic',
     priority = 1000,
@@ -96,7 +138,7 @@ return {
         palette = require 'nordic.colors',
         italic_comments = false,
         on_palette = function(palette)
-          palette.black1 = '#161616'
+          --palette.black1 = '#161616'
         end,
         on_highlight = function(highlights, palette)
           for _, highlight in pairs(highlights) do
@@ -123,17 +165,15 @@ return {
   {
     'tanvirtin/monokai.nvim',
     name = 'monokai',
-    config = function()
-      require('monokai').setup {
+	opts = {
         italics = false,
         palette = {
-          base1 = '#181818',
+          classic = { base1 = '#161616', base2 = '#161616' },
         },
         custom_hlgroups = {
           CursorLine = { bg = '#2a2a2a' },
         },
-      }
-    end,
+    }
   },
   {
     'blazkowolf/gruber-darker.nvim',
@@ -162,7 +202,7 @@ return {
           comments = 'none',
         },
         colors = {
-          bg0 = '#121212',
+          bg0 = '#141414',
         },
       }
     end,
@@ -175,7 +215,7 @@ return {
         undercurl = true,
         transparent = false,
         gutter = false,
-        dimInactive = true, -- disabled when transparent
+        dimInactive = false, -- disabled when transparent
         terminalColors = true,
         commentStyle = { italic = false },
         functionStyle = { italic = false },
@@ -187,12 +227,10 @@ return {
             ui = {
               bg = '#141414',
               bg_cursorline = '#111144',
-              bg_p1 = '#141414',
-              bg_p2 = '#141414',
-              bg_dim = '#141414',
+             -- bg_p1 = '#141414',
+             -- bg_p2 = '#141414',
+              -- bg_dim = '#141414',
             },
-            float = { bg = '#141414' },
-            pmenu = { bg = '#141414', bg_sbar = '#141414' },
           },
           palette = {},
         }, -- override default palette and theme colors
@@ -217,12 +255,26 @@ return {
           folds = false,
         },
         palette_overrides = {
-          dark0 = '#121212',
-          dark0_hard = '#121212',
-          dark1 = '#121212',
+          dark0 = '#161616',
+          dark0_hard = '#161616',
+          dark1 = '#161616',
         },
+		overrides = {
+			Pmenu = { bg = '#202020' },
+			PmenuThumb = { bg = '#202020' },
+			PmenuSel = { bg = '#202020' },
+			PmenuSbar = { bg = '#202020' },
+		},
       }
     end,
+  },
+  {
+	'mikesmithgh/gruvsquirrel.nvim',
+	name = 'gruvsquirrel',
+	lazy = false,
+	priority = 1000,
+	config = function()
+	end,
   },
   {
     'catppuccin/nvim',

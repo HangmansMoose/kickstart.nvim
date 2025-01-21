@@ -14,14 +14,36 @@ return {
 	end,
   },
   {
-    'Mofiqul/adwaita.nvim',
-    name = 'adwaita',
-    lazy = false,
-    priority = 1000,
-    config = function()
-      vim.g.adwaita_darker = true
-      -- vim.cmd('colorscheme adwaita')
-    end,
+	'habamax/vim-gruvbit',
+	name = 'gruvbit',
+	lazy = false
+  },
+  {
+		'deparr/tairiki.nvim',
+		name = 'tairiki',
+		lazy = false,
+		config = function()
+			require('tairiki').setup {
+				code_style = { comments = 'none' },
+				colors = {
+					dark = {
+						black = '#191919',
+						bg0 = '#191919',
+						comment = '#2f6b31'
+					},
+				highlights = {
+						['@Comment']     = { fg = '#2f6b31' },
+						['@Normal']      = { bg = '#191919' },
+						['@NormalNC']    = { bg = '#191919' },
+						['@SignColumn']  = { bg = '#191919' },
+						['@EndOfBuffer'] = { bg = '#191919' },
+						['@CursorLine']  = { bg = '#111144' },
+						['@Cursor']      = { bg = '#00ff33', fg = '#303030'}
+
+					}
+				}
+			}
+		end,
   },
   {
     '2giosangmitom/nightfall.nvim',
@@ -53,20 +75,8 @@ return {
     end,
   },
   {
-    'arturgoms/moonbow.nvim',
-    name = 'moonbow',
-    config = function()
-      require('moonbow').setup {
-        italic = false,
-        underline = false,
-        strikethrough = false,
-        values = {
-          bg = '#141414',
-          gutter_normal = '#141414',
-          gutter_active = '#141414',
-        },
-      }
-    end,
+	'NTBBloodbath/doom-one.nvim',
+	name = 'doom-one',
   },
   {
     'rebelot/kanagawa.nvim',
@@ -80,9 +90,14 @@ return {
           theme = {
             dragon = {
               ui = {
-                bg = '#161616',
-                bg_gutter = '#161616',
+                bg = '#181818',
+                bg_gutter = '#181818',
                 bg_p2 = '#111144', -- this controls current line colour
+				float = { bg = "#1b1b1b" },
+				pmenu = {
+					bg = "#1b1b1b",
+				},
+				pmenuSbar = { bg = "#1b1b1b" },
               },
             },
             wave = {
@@ -138,7 +153,7 @@ return {
         palette = require 'nordic.colors',
         italic_comments = false,
         on_palette = function(palette)
-          --palette.black1 = '#161616'
+          --palette.black1 = '#202020'
         end,
         on_highlight = function(highlights, palette)
           for _, highlight in pairs(highlights) do
@@ -162,19 +177,13 @@ return {
       }
     end,
   },
-  {
-    'tanvirtin/monokai.nvim',
-    name = 'monokai',
-	opts = {
-        italics = false,
-        palette = {
-          classic = { base1 = '#161616', base2 = '#161616' },
-        },
-        custom_hlgroups = {
-          CursorLine = { bg = '#2a2a2a' },
-        },
-    }
-  },
+  --{
+   -- 'tanvirtin/monokai.nvim',
+   -- name = 'monokai',
+--	require('monokai').setup {
+--		italics = false,
+--	},
+  --},
   {
     'blazkowolf/gruber-darker.nvim',
     name = 'gruber-darker',
@@ -206,6 +215,23 @@ return {
         },
       }
     end,
+  },
+  {
+	'cpea2506/one_monokai.nvim',
+	name = "one_monokai",
+	lazy = false,
+	priority = 1000,
+	config = function()
+		require'one_monokai'.setup {
+			italics = false,
+			colors = { bg = '#1b1b1b' },
+			groups = {
+				defaults = {	
+					Cursor = { bg = "#00ff33", fg = "#303030" }
+				}
+			}
+		}
+	end,
   },
   {
     'sho-87/kanagawa-paper.nvim',
@@ -255,9 +281,9 @@ return {
           folds = false,
         },
         palette_overrides = {
-          dark0 = '#161616',
-          dark0_hard = '#161616',
-          dark1 = '#161616',
+          dark0 = '#1c1c1c',
+          dark0_hard = '#1c1c1c',
+          dark1 = '#1c1c1c',
         },
 		overrides = {
 			Pmenu = { bg = '#202020' },
@@ -321,6 +347,13 @@ return {
     end,
   },
   {
+	'miikanissi/modus-themes.nvim',
+	name = 'modus',
+	priority = 1000,
+	config = function()
+	end,
+  },
+  {
     'nvim-lualine/lualine.nvim',
     name = 'lualine',
     config = function()
@@ -331,7 +364,7 @@ return {
         green = '3effdc',
         violet = '#ff61ef',
         yellow = '#ffda7b',
-        black = '#161616',
+        black = '#181818',
       }
       lualine_nightfly.normal.a.bg = new_colors.black
       lualine_nightfly.normal.a.fg = new_colors.yellow

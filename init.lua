@@ -92,7 +92,7 @@ if vim.g.neovide or vim.g.nvy then
   vim.g.neovide_cursor_animate_command_line = false
   vim.g.neovide_scroll_animation_length = 0
   vim.g.neovide_position_animation_length = 0
-  vim.o.guifont = 'CaskaydiaMono_Nerd_Font_Mono:h13'
+  vim.o.guifont = 'CaskaydiaMono_Nerd_Font:h12'
   -- vim.g.neovide_transparency = 1
   vim.g.neovide_remember_window_size = true
   --vim.g.neovide_fullscreen = true
@@ -943,7 +943,7 @@ require('lazy').setup {
         -- Autoinstall languages that are not installed
         auto_install = true,
         highlight = {
-          enable = true,
+          enable = false,
           -- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
           --  If you are experiencing weird indenting issues, add the language to
           --  the list of additional_vim_regex_highlighting and disabled languages for indent.
@@ -1014,16 +1014,17 @@ require('lazy').setup {
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
-vim.api.nvim_set_hl(0, 'Cursor', { ctermfg = 'GREY', ctermbg = 'GREEN', fg = '#303030', bg = '#00ff33' })
+-- vim.api.nvim_set_hl(0, 'Cursor', { ctermfg = 'GREY', ctermbg = 'GREEN', fg = '#303030', bg = '#00ff33' })
 
 --vim.cmd 'hi LineNrAbove guifg=#C8C093'
 --vim.cmd 'hi LineNr guifg=#c5c9c5'
 --vim.cmd 'hi LineNrBelow guifg=#C8C093'
 -- vim.api.nvim_set_hl(0, 'SignColumn', { bg = '#141414', ctermbg = 'BLACK' })
-vim.cmd 'colorscheme kanagawa-paper'
-vim.cmd 'hi Cursor guifg=#303030 guibg=#00ff33'
--- vim.cmd 'hi Normal guibg=#202020 ctermbg=BLACK'
-vim.cmd 'hi BufferVisible guibg=#202020 ctermbg=BLACK'
-vim.cmd 'hi LineNr guifg=#4a4840 ctermbg=NONE'
--- vim.cmd 'hi SignColumn guibg=NONE ctermbg=NONE'
+vim.cmd 'colorscheme tairiki'
+--vim.cmd 'hi Cursor guifg=#00ff33 guibg=#00ff33'
+--vim.cmd 'hi Normal guibg=#1c1c1c ctermbg=GREY'
+--vim.cmd 'hi NormalNC guibg=#1c1c1c ctermbg=GREY'
+-- vim.cmd 'hi BufferVisible guibg=#202020 ctermbg=BLACK'
+-- vim.cmd 'hi CursorLineNr guifg=#191919 ctermbg=NONE'
+--vim.cmd 'hi SignColumn guibg=#191919 ctermbg=NONE'
 -- vim.cmd 'hi WinBar guibg=NONE ctermbg=NONE'

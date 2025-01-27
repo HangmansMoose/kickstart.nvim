@@ -484,6 +484,12 @@ require('lazy').setup {
         vim.keymap.set('n', '<leader>s.', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
         vim.keymap.set('n', '<leader><leader>', builtin.buffers, { desc = '[ ] Find existing buffers' })
 
+        vim.keymap.set('n', '<leader>sc', function()
+          builtin.find_files {
+            cwd = vim.fn.stdpath 'config',
+          }
+        end, { desc = '[S]earch [C]onfig Files' })
+
         -- Slightly advanced example of overriding default behavior and theme
         vim.keymap.set('n', '<leader>/', function()
           -- You can pass additional configuration to Telescope to change the theme, layout, etc.
@@ -721,46 +727,46 @@ require('lazy').setup {
       end,
     },
     { -- Autoformat
-      -- 'stevearc/conform.nvim',
-      --      event = { 'BufWritePre' },
-      --      cmd = { 'ConformInfo' },
-      --      keys = {
-      --        {
-      --          '<leader>f',
-      --          function()
-      --            require('conform').format { async = true, lsp_format = 'fallback' }
-      --          end,
-      --          mode = '',
-      --          desc = '[F]ormat buffer',
-      --        },
-      --      },
-      --      opts = {
-      --        notify_on_error = false,
-      --        format_on_save = function(bufnr)
-      --          -- Disable "format_on_save lsp_fallback" for languages that don't
-      --          -- have a well standardized coding style. You can add additional
-      --          -- languages here or re-enable it for the disabled ones.
-      --          local disable_filetypes = { c = true, cpp = true }
-      --          local lsp_format_opt
-      --          if disable_filetypes[vim.bo[bufnr].filetype] then
-      --            lsp_format_opt = 'never'
-      --          else
-      --            lsp_format_opt = 'fallback'
-      --          end
-      --          return {
-      --            timeout_ms = 500,
-      --            lsp_format = lsp_format_opt,
-      --          }
-      --        end,
-      --        formatters_by_ft = {
-      --          lua = { 'stylua' },
-      --          -- Conform can also run multiple formatters sequentially
-      --          -- python = { "isort", "black" },
-      --          --
-      --          -- You can use 'stop_after_first' to run the first available formatter from the list
-      --          -- javascript = { "prettierd", "prettier", stop_after_first = true },
-      --        },
-      --      },
+      'stevearc/conform.nvim',
+      event = { 'BufWritePre' },
+      cmd = { 'ConformInfo' },
+      keys = {
+        {
+          '<leader>f',
+          function()
+            require('conform').format { async = true, lsp_format = 'fallback' }
+          end,
+          mode = '',
+          desc = '[F]ormat buffer',
+        },
+      },
+      opts = {
+        notify_on_error = false,
+        format_on_save = function(bufnr)
+          -- Disable "format_on_save lsp_fallback" for languages that don't
+          -- have a well standardized coding style. You can add additional
+          -- languages here or re-enable it for the disabled ones.
+          local disable_filetypes = { c = true, cpp = true }
+          local lsp_format_opt
+          if disable_filetypes[vim.bo[bufnr].filetype] then
+            lsp_format_opt = 'never'
+          else
+            lsp_format_opt = 'fallback'
+          end
+          return {
+            timeout_ms = 500,
+            lsp_format = lsp_format_opt,
+          }
+        end,
+        formatters_by_ft = {
+          lua = { 'stylua' },
+          -- Conform can also run multiple formatters sequentially
+          -- python = { "isort", "black" },
+          --
+          -- You can use 'stop_after_first' to run the first available formatter from the list
+          -- javascript = { "prettierd", "prettier", stop_after_first = true },
+        },
+      },
     },
 
     { -- Autocompletion
@@ -987,7 +993,7 @@ require('lazy').setup {
     --  Uncomment the following line and add your plugins to `lua/custom/plugins/*.lua` to get going.
     --    For additional information, see `:help lazy.nvim-lazy.nvim-structuring-your-plugins`
     { import = 'custom.plugins' },
-
+    -- require 'custom.configs.terminal',
     ui = {
       -- If you are using a Nerd Font: set icons to an empty table which will use the
       -- default lazy.nvim defined Nerd Font icons, otherwise define a unicode icons table
@@ -1010,12 +1016,6 @@ require('lazy').setup {
   },
 }
 
--- Here is the build functionality
-
--- The line beneath this is called `modeline`. See `:help modeline`
--- vim: ts=2 sts=2 sw=2 et
--- vim.api.nvim_set_hl(0, 'Cursor', { ctermfg = 'GREY', ctermbg = 'GREEN', fg = '#303030', bg = '#00ff33' })
-
 --vim.cmd 'hi LineNrAbove guifg=#C8C093'
 --vim.cmd 'hi LineNr guifg=#c5c9c5'
 --vim.cmd 'hi LineNrBelow guifg=#C8C093'
@@ -1024,7 +1024,6 @@ vim.cmd 'colorscheme tairiki'
 --vim.cmd 'hi Cursor guifg=#00ff33 guibg=#00ff33'
 --vim.cmd 'hi Normal guibg=#1c1c1c ctermbg=GREY'
 --vim.cmd 'hi NormalNC guibg=#1c1c1c ctermbg=GREY'
--- vim.cmd 'hi BufferVisible guibg=#202020 ctermbg=BLACK'
--- vim.cmd 'hi CursorLineNr guifg=#191919 ctermbg=NONE'
---vim.cmd 'hi SignColumn guibg=#191919 ctermbg=NONE'
--- vim.cmd 'hi WinBar guibg=NONE ctermbg=NONE'
+
+-- Got this from TJDeVries (Neovim has it's own terminal?! youtube )
+-- to remove line numbers from terminal instaces

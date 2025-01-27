@@ -1,5 +1,24 @@
 vim.keymap.set('t', '<esc><esc>', '<c-\\><c-n>')
-vim.opt.shell = 'pwsh -NoExit -File C:/tools/vcvars_powershell.ps1'
+vim.opt.shell = 'pwsh -NoLogo -NoExit -File C:/tools/vcvars_powershell.ps1'
+
+TermJobId = 0
+
+vim.api.nvim_create_autocmd('TermOpen', {
+  group = vim.api.nvim_create_augroup('custom-term-open', { clear = true }),
+  callback = function()
+    vim.opt.number = false
+    vim.opt.relativenumber = false
+    TermJobId = vim.bo.channel
+  end,
+})
+
+-- small terminal
+vim.keymap.set('n', '<leader>st', function()
+  vim.cmd.vnew() -- new split
+  vim.cmd.term() -- opens terminal in new split
+  vim.cmd.wincmd 'J' -- puts the window at the bottom
+  vim.api.nvim_win_set_height(0, 15) -- rows and columns not pixels
+end)
 
 local state = {
   floating = {
@@ -46,13 +65,30 @@ local toggle_terminal = function()
   if not vim.api.nvim_win_is_valid(state.floating.win) then
     state.floating = create_floating_window { buf = state.floating.buf }
     if vim.bo[state.floating.buf].buftype ~= 'terminal' then
-      vim.cmd.terminal()
+      vim.cmd.term()
+      TermJobId = vim.bo.channel
+      print('job_id: ', TermJobId)
     end
   else
     vim.api.nvim_win_hide(state.floating.win)
   end
 end
 
+local function find_build_bat()
+  if not vim.fn.filereadable 'build.bat' then
+    vim.cmd 'cd ../'
+    find_build_bat()
+  end
+end
+
+local build_project = function()
+  toggle_terminal()
+  find_build_bat()
+  vim.fn.chansend(TermJobId, { './build.bat\r\n' })
+end
+
 -- Example usage:
 -- Create a floating window with default dimensions
 vim.api.nvim_create_user_command('Floaterminal', toggle_terminal, {})
+vim.keymap.set({ 'n', 't' }, '<space>tt', toggle_terminal)
+vim.keymap.set({ 'n', 't' }, '<space>m', build_project)

@@ -334,9 +334,9 @@ return {
       require('lualine').setup {
         options = {
           globalstatus = true,
-          theme = lualine_nightfly,
-          section_separators = '',
-          component_separators = '',
+          theme = powerline_dark,
+          --section_separators = '',
+          --component_separators = '',
         },
         sections = {
           lualine_c = {

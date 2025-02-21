@@ -1,11 +1,12 @@
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+
 vim.o.guicursor =
   'n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175'
 
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed and selected in the terminal
 vim.g.have_nerd_font = true
 vim.opt.wrap = false
@@ -141,17 +142,40 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
+-- Neovide specific options
 if vim.g.neovide or vim.g.nvy then
-  -- Turn off cursor stupidity that no one wants
   vim.g.neovide_cursor_animation_length = 0
   vim.g.neovide_cursor_trail_size = 0
   vim.g.neovide_cursor_animate_command_line = false
-  vim.g.neovide_scroll_animation_length = 0
-  vim.g.neovide_position_animation_length = 0
-  vim.o.guifont = 'CaskaydiaMono_Nerd_Font:h13'
+  vim.g.neovide_scroll_animation_length = 0.15
+  vim.g.neovide_refresh_rate = 144
+  vim.g.neovide_position_animation_length = 0.1
+  vim.o.guifont = 'CaskaydiaMono_Nerd_Font:h12:#e-subpixelantialias'
   -- vim.g.neovide_transparency = 1
   vim.g.neovide_remember_window_size = true
   -- vim.g.neovide_fullscreen = true
 end
 
+-- These three lines here control the border color between the windows/buffers/panels
+-- The forground only sets the center line, there are actually two thicker lines either side
+-- that are controlled by the background color, but by defaut they take on the same color as the
+-- current NORMAL bg color
+vim.cmd 'set laststatus=3'
+vim.opt.fillchars = 'vert:┃,horiz:━,verthoriz:╋,horizup:┻,horizdown:┳,vertleft:┫,vertright:┣,eob: '
+vim.cmd 'hi VertSplit guifg=#252525 ctermfg=GREY'
+
+-- This little bit is for scope.nvim (not snacks scope they are different)
+
+vim.opt.sessionoptions = { 'buffers', 'tabpages', 'globals' }
+
 require 'config.lazy'
+
+-- vim.api.nvim_set_hl(0, 'SignColumn', { bg = '#141414', ctermbg = 'BLACK' })
+vim.cmd 'colorscheme tairiki'
+vim.cmd 'hi Cursor guifg=#303030 guibg=#00ff33'
+--vim.cmd 'hi Normal guibg=#1c1c1c ctermbg=GREY'
+--vim.cmd 'hi NormalNC guibg=#1c1c1c ctermbg=GREY
+if vim.g.colors_name == 'naysayer' then
+  vim.cmd 'hi Normal guibg=#181818'
+  vim.cmd 'hi NormalNC guibg=#181818'
+end

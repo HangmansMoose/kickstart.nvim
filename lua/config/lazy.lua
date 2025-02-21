@@ -26,16 +26,9 @@ require('lazy').setup {
   -- with the first argument being the link and the following
   -- keys can be used to configure plugin behavior/loading/etc.
   --
+  -- Snacks needs to be loaded first
+  { import = 'HangmansMoose.snacks' },
   -- Use `opts = {}` to force a plugin to be loaded.
   -- load all lua files in the plugins directory
   { import = 'plugins' },
 }
-
---vim.cmd 'hi LineNrAbove guifg=#C8C093'
---vim.cmd 'hi LineNr guifg=#c5c9c5'
---vim.cmd 'hi LineNrBelow guifg=#C8C093'
--- vim.api.nvim_set_hl(0, 'SignColumn', { bg = '#141414', ctermbg = 'BLACK' })
-vim.cmd 'colorscheme gruvbox'
-vim.cmd 'hi Cursor guifg=#303030 guibg=#00ff33'
---vim.cmd 'hi Normal guibg=#1c1c1c ctermbg=GREY'
---vim.cmd 'hi NormalNC guibg=#1c1c1c ctermbg=GREY

@@ -183,10 +183,10 @@ return {
         },
         overrides = {
           CursorLine = { bg = '#252525' },
-          --  Pmenu = { bg = '#202020' },
-          --  PmenuThumb = { bg = '#202020' },
-          --	PmenuSel = { bg = '#202020' },
-          --	PmenuSbar = { bg = '#202020' },
+          Pmenu = { bg = '#252525' },
+          PmenuThumb = { bg = '#252525' },
+          PmenuSel = { bg = '#252525' },
+          PmenuSbar = { bg = '#252525' },
         },
       }
     end,

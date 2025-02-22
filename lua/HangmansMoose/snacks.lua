@@ -14,12 +14,15 @@ return {
       indent = { enabled = false },
       input = { enabled = false },
       picker = { enabled = true },
-      notifier = { enabled = false },
+      notifier = { enabled = true },
       quickfile = { enabled = false },
       scope = { enabled = true },
+      scratch = { enabled = true },
       scroll = { enabled = false },
       statuscolumn = { enabled = false },
+      terminal = { enabled = true },
       words = { enabled = false },
+      -- Change dashboard color
     },
 
     keys = {

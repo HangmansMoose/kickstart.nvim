@@ -72,6 +72,9 @@ return {
             vim.keymap.set(mode, keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
           end
 
+          -- local client = vim.lsp.get_client_by_id(event.data.client_id)
+          -- client.server_capabilities.semanticTokensProvider = nil
+
           map('gd', require('snacks.picker').lsp_definitions, '[G]oto [D]efinition')
           map('gD', require('snacks.picker').lsp_declarations, '[G]oto [D]eclaration')
           map('gr', require('snacks.picker').lsp_references, '[G]oto [R]eferences')
@@ -98,6 +101,7 @@ return {
         -- gopls = {},
         pyright = {}, -- note, needed to install node/npm for this plugin to successfully load
         rust_analyzer = {},
+        omnisharp = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
         -- Some languages (like typescript) have entire language plugins that can be useful:
@@ -141,6 +145,10 @@ return {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'prettier',
+        'eslint_d',
+        'csharpier',
+        'netcoredbg',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -158,48 +166,53 @@ return {
       }
     end,
   },
-  --{ -- Autoformat
-  --  'stevearc/conform.nvim',
-  --  event = { 'BufWritePre' },
-  --  cmd = { 'ConformInfo' },
-  --  keys = {
-  --    {
-  --      '<leader>f',
-  --      function()
-  --        require('conform').format { async = true, lsp_format = 'fallback' }
-  --      end,
-  --      mode = '',
-  --      desc = '[F]ormat buffer',
-  --    },
-  --  },
-  --  opts = {
-  --    notify_on_error = false,
-  --    format_on_save = function(bufnr)
-  --      -- Disable "format_on_save lsp_fallback" for languages that don't
-  --      -- have a well standardized coding style. You can add additional
-  --      -- languages here or re-enable it for the disabled ones.
-  --      local disable_filetypes = { c = true, cpp = true }
-  --      local lsp_format_opt
-  --      if disable_filetypes[vim.bo[bufnr].filetype] then
-  --        lsp_format_opt = 'never'
-  --      else
-  --        lsp_format_opt = 'fallback'
-  --      end
-  --      return {
-  --        timeout_ms = 500,
-  --        lsp_format = lsp_format_opt,
-  --      }
-  --    end,
-  --    formatters_by_ft = {
-  --      lua = { 'stylua' },
-  --      -- Conform can also run multiple formatters sequentially
-  --      -- python = { "isort", "black" },
-  --      --
-  --      -- You can use 'stop_after_first' to run the first available formatter from the list
-  --      -- javascript = { "prettierd", "prettier", stop_after_first = true },
-  --    },
-  --  },
-  --},
+  { -- Autoformat
+    'stevearc/conform.nvim',
+    event = { 'BufWritePre' },
+    cmd = { 'ConformInfo' },
+    keys = {
+      {
+        '<leader>f',
+        function()
+          require('conform').format { async = true, lsp_format = 'fallback' }
+        end,
+        mode = '',
+        desc = '[F]ormat buffer',
+      },
+    },
+    opts = {
+      notify_on_error = false,
+      format_on_save = function(bufnr)
+        -- Disable "format_on_save lsp_fallback" for languages that don't
+        -- have a well standardized coding style. You can add additional
+        -- languages here or re-enable it for the disabled ones.
+        local disable_filetypes = { c = true, cpp = true }
+        local lsp_format_opt
+        if disable_filetypes[vim.bo[bufnr].filetype] then
+          lsp_format_opt = 'never'
+        else
+          lsp_format_opt = 'fallback'
+        end
+        return {
+          timeout_ms = 500,
+          lsp_format = lsp_format_opt,
+        }
+      end,
+      formatters_by_ft = {
+        lua = { 'stylua' },
+        html = { 'prettier' },
+        css = { 'prettier' },
+        json = { 'prettier' },
+        yaml = { 'prettier' },
+        markdown = { 'prettier' },
+        -- Conform can also run multiple formatters sequentially
+        -- python = { "isort", "black" },
+        --
+        -- You can use 'stop_after_first' to run the first available formatter from the list
+        -- javascript = { "prettierd", "prettier", stop_after_first = true },
+      },
+    },
+  },
 
   { -- Autocompletion
     'hrsh7th/nvim-cmp',

@@ -171,7 +171,7 @@ vim.opt.sessionoptions = { 'buffers', 'tabpages', 'globals' }
 require 'config.lazy'
 
 -- vim.api.nvim_set_hl(0, 'SignColumn', { bg = '#141414', ctermbg = 'BLACK' })
-vim.cmd 'colorscheme sonokai'
+vim.cmd 'colorscheme gruvbox'
 vim.cmd 'hi Cursor guifg=#303030 guibg=#00ff33'
 --vim.cmd 'hi Normal guibg=#1c1c1c ctermbg=GREY'
 --vim.cmd 'hi NormalNC guibg=#1c1c1c ctermbg=GREY

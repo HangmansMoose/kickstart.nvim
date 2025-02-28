@@ -31,4 +31,6 @@ require('lazy').setup {
   -- Use `opts = {}` to force a plugin to be loaded.
   -- load all lua files in the plugins directory
   { import = 'plugins' },
+
 }
+

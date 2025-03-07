@@ -4,6 +4,12 @@ return {
 	
   },
   {
+	  'behemothbucket/gruber-darker-theme.nvim',
+	--  name = 'behemoth-gruber',
+	  lazy = false,
+	  priority = 1000,
+  },
+  {
 	'loctvl842/monokai-pro.nvim',
 	name = 'monokai-pro',
 	lazy = false,

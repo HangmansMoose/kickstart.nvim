@@ -150,7 +150,7 @@ if vim.g.neovide or vim.g.nvy then
   vim.g.neovide_scroll_animation_length = 0.15
   vim.g.neovide_refresh_rate = 144
   vim.g.neovide_position_animation_length = 0
-  vim.o.guifont = 'CaskaydiaMono_Nerd_Font:h13:#e-subpixelantialias'
+  vim.o.guifont = 'MartianMono_Nerd_Font:h12:#e-subpixelantialias'
   -- vim.g.neovide_transparency = 1
   vim.g.neovide_remember_window_size = true
   -- vim.g.neovide_fullscreen = true
@@ -171,8 +171,9 @@ vim.opt.sessionoptions = { 'buffers', 'tabpages', 'globals' }
 require 'config.lazy'
 require 'config.treesit_conf'
 -- vim.api.nvim_set_hl(0, 'SignColumn', { bg = '#141414', ctermbg = 'BLACK' })
-vim.cmd 'colorscheme sonokai'
+vim.cmd 'colorscheme tairiki'
 vim.cmd 'hi Cursor guifg=#303030 guibg=#00ff33'
+vim.cmd 'hi CursorLine guibg=#111144'
 --vim.cmd 'hi Normal guibg=#1c1c1c ctermbg=GREY'
 --vim.cmd 'hi NormalNC guibg=#1c1c1c ctermbg=GREY
 if vim.g.colors_name == 'naysayer' then

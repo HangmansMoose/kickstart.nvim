@@ -4,6 +4,15 @@ return {
 	
   },
   {
+	  'WTFox/jellybeans.nvim',
+	  lazy = false,
+	  priority = 1000,
+	  opts = {
+		  style = "dark",
+		  italics = false
+	  },
+  },
+  {
 	  'behemothbucket/gruber-darker-theme.nvim',
 	--  name = 'behemoth-gruber',
 	  lazy = false,

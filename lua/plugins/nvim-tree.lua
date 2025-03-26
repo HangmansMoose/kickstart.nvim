@@ -3,7 +3,10 @@ return {
     'nvim-tree/nvim-tree.lua',
     config = function()
       require('nvim-tree').setup {
-        renderer = {
+        view = {
+			width = 25,
+		},
+		renderer = {
           icons = {
             glyphs = {
               folder = {

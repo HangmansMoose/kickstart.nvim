@@ -1,13 +1,36 @@
 return {
   {
 	'Mofiqul/adwaita.nvim',
-	
   },
   {
-	  'behemothbucket/gruber-darker-theme.nvim',
-	--  name = 'behemoth-gruber',
-	  lazy = false,
-	  priority = 1000,
+	'WTFox/jellybeans.nvim',
+	lazy = false,
+	priotiy = 1000,
+	opts = {
+		style = "dark",
+		italics = false,
+		flat_ui = false,
+		plugins = {
+			all = true,
+		},
+		on_colors = function(c)
+			local dark_bg = "#121212"
+			local light_bg = "#888888"
+			c.background = vim.o.background == "light" and light_bg or dark_bg
+			c.Pmenu = dark_bg
+			c.NormalFloat = dark_bg
+		end,
+
+		on_highlights = function(hl, c)
+			hl.Cursor = { bg = '#00ff33', fg = '#303030'}
+			hl.CursorLine = { bg = '#111144'}
+			hl.WinSeparator = { fg = "#454545"}
+			hl.Pmenu = { bg = "#121212"}
+			hl.Normal = { bg = "#121212"}
+			hl.NormalNC = { bg = "#121212"}
+			hl.NormalFloat = { bg = "#121212"}
+		end,
+	}
   },
   {
 	'loctvl842/monokai-pro.nvim',

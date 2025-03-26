@@ -88,8 +88,8 @@ vim.opt.cursorline = true
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
-vim.g.loaded_netrw = 0
-vim.g.loaded_netrwPlugin = 0
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 vim.opt.termguicolors = true
 
 -- [[ Basic Keymaps ]]
@@ -150,8 +150,8 @@ if vim.g.neovide or vim.g.nvy then
   vim.g.neovide_scroll_animation_length = 0.15
   vim.g.neovide_refresh_rate = 144
   vim.g.neovide_position_animation_length = 0
-  vim.o.guifont = 'MartianMono_Nerd_Font:h12:#e-subpixelantialias'
-  -- vim.g.neovide_transparency = 1
+  vim.o.guifont = 'CaskaydiaMono_Nerd_Font:h13:#e-subpixelantialias'
+  vim.g.neovide_transparency = 1
   vim.g.neovide_remember_window_size = true
   -- vim.g.neovide_fullscreen = true
 end
@@ -171,12 +171,53 @@ vim.opt.sessionoptions = { 'buffers', 'tabpages', 'globals' }
 require 'config.lazy'
 require 'config.treesit_conf'
 -- vim.api.nvim_set_hl(0, 'SignColumn', { bg = '#141414', ctermbg = 'BLACK' })
-vim.cmd 'colorscheme tairiki'
-vim.cmd 'hi Cursor guifg=#303030 guibg=#00ff33'
-vim.cmd 'hi CursorLine guibg=#111144'
+vim.cmd 'colorscheme jellybeans'
+--vim.cmd 'hi Cursor guifg=#303030 guibg=#00ff33' 
+--vim.cmd 'hi CursorLine guibg=#111144'
 --vim.cmd 'hi Normal guibg=#1c1c1c ctermbg=GREY'
 --vim.cmd 'hi NormalNC guibg=#1c1c1c ctermbg=GREY
 if vim.g.colors_name == 'naysayer' then
   vim.cmd 'hi Normal guibg=#181818'
   vim.cmd 'hi NormalNC guibg=#181818'
 end
+
+-- This needs a better place, just putting it here for now
+
+local disabled_project_path = "G:/Code/HHFollow/handmade/code"
+
+vim.api.nvim_create_autocmd("LspAttach", {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client and client.name == "clangd" then
+      local current_file = vim.api.nvim_buf_get_name(args.buf)
+      if current_file:find(disabled_project_path, 1, true) then
+        vim.schedule(function()
+          client.stop()
+        end)
+      end
+    end
+  end,
+})
+
+local toggle_header_cpp = function()
+	local baseFilePath = vim.fn.expand('%:r')
+	local currentFileExtension = vim.fn.expand('%:e')
+	local switchToFileName
+
+	if currentFileExtension == 'cpp' then
+		switchToFileName = baseFilePath .. '.h'  
+	elseif currentFileExtension == 'h' then
+		switchToFileName = baseFilePath .. '.cpp'  
+	else 
+		print("Not a C/C++ file.")
+		return
+	end
+
+	local openFileCmd = 'e ' .. switchToFileName
+	
+	vim.cmd(openFileCmd)
+	
+end
+
+
+vim.keymap.set('n', '<A-h>', toggle_header_cpp, { desc = 'Switch between cpp and header file' })

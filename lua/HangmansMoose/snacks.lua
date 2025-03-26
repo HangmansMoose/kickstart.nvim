@@ -1,3 +1,5 @@
+--vim.o.shell = 'pwsh -NoLogo -NoExit -File C:/tools/vcvars_powershell.ps1'
+
 return {
   {
     'folke/snacks.nvim',
@@ -13,21 +15,42 @@ return {
       explorer = { enabled = true },
       indent = { enabled = false },
       input = { enabled = false },
-      picker = { enabled = true },
       notifier = { enabled = true },
       quickfile = { enabled = false },
       scope = { enabled = true },
       scratch = { enabled = true },
       scroll = { enabled = false },
       statuscolumn = { enabled = false },
-      terminal = { enabled = true },
       words = { enabled = false },
       -- Change dashboard color
+      picker = { 
+		  enabled = true, 
+		  sources = {
+			  explorer = {
+				  layout = {
+					  layout = {
+						  width = 25,
+					  }
+				  }
+			  }
+		  }
+	  },
+      terminal = { 
+		  enabled = true,
+		  shell = 'pwsh -NoLogo -NoExit -File C:/tools/vcvars_powershell.ps1',
+	  },
     },
 
     keys = {
       -- Top Pickers & Explorer
       {
+        '<leader>m',
+        function()
+          Snacks.terminal.open('./build.bat')
+        end,
+        desc = 'Smart Find Files',
+      },
+	  {
         '<leader><space>',
         function()
           Snacks.picker.smart()

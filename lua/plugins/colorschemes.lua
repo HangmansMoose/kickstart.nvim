@@ -9,28 +9,22 @@ return {
 	opts = {
 		style = "dark",
 		italics = false,
-		flat_ui = false,
-		plugins = {
-			all = true,
-		},
-		on_colors = function(c)
-			local dark_bg = "#121212"
-			local light_bg = "#888888"
-			c.background = vim.o.background == "light" and light_bg or dark_bg
-			c.Pmenu = dark_bg
-			c.NormalFloat = dark_bg
+		flat_ui = true,
+		plugins = { all = true },
+
+		on_highlights = function(hl, colors)
+			hl.Cursor = { bg = "#00ff33", fg = "#303030" }
+			hl.CursorLine = { bg = "#111144" }
+			hl.Comment = { fg = "#2f6b31" }
 		end,
 
-		on_highlights = function(hl, c)
-			hl.Cursor = { bg = '#00ff33', fg = '#303030'}
-			hl.CursorLine = { bg = '#111144'}
-			hl.WinSeparator = { fg = "#454545"}
-			hl.Pmenu = { bg = "#121212"}
-			hl.Normal = { bg = "#121212"}
-			hl.NormalNC = { bg = "#121212"}
-			hl.NormalFloat = { bg = "#121212"}
+		on_colors = function(c)
+			local light_bg = '#ffffff'
+			local dark_bg = "#121212"
+			vim.o.background = 'dark'
+			c.background = vim.o.background == 'light' and light_bg or dark_bg
 		end,
-	}
+	},
   },
   {
 	'loctvl842/monokai-pro.nvim',
@@ -89,27 +83,26 @@ return {
     'deparr/tairiki.nvim',
     name = 'tairiki',
     lazy = false,
-    config = function()
-      require('tairiki').setup {
+	opts = {
         code_style = { comments = 'none' },
-        colors = {
-          dark = {
-            black = '#191919',
-            bg0 = '#191919',
-            comment = '#2f6b31',
-          },
-          highlights = {
-            ['@Comment'] = { fg = '#2f6b31' },
-            ['@Normal'] = { bg = '#191919' },
-            ['@NormalNC'] = { bg = '#191919' },
-            ['@SignColumn'] = { bg = '#191919' },
-            ['@EndOfBuffer'] = { bg = '#191919' },
-            ['@CursorLine'] = { bg = '#111144' },
-            ['@Cursor'] = { bg = '#00ff33', fg = '#303030' },
-          },
-        },
+		plugins = { all = true },
+        colors = function(c, opt)
+          c.black = '#121212'
+          c.bg0 = '#121212'
+          c.comment = '#2f6b31'
+		end,
+        highlights = function(hl, c, opt) 
+            hl.Comment = { fg = '#2f6b31' }
+            hl.Normal = { bg = '#121212' }
+            hl.NormalNC = { bg = '#121212' }
+            hl.SignColumn = { bg = '#121212' }
+            hl.EndOfBuffer = { bg = '#121212' }
+            hl.CursorLine = { bg = '#111144' }
+            hl.Cursor = { bg = '#00ff33', fg = '#303030' }
+		end,
+          
+        
       }
-    end,
   },
   {
     'alljokecake/naysayer-theme.nvim',

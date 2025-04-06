@@ -171,7 +171,7 @@ vim.opt.sessionoptions = { 'buffers', 'tabpages', 'globals' }
 require 'config.lazy'
 require 'config.treesit_conf'
 -- vim.api.nvim_set_hl(0, 'SignColumn', { bg = '#141414', ctermbg = 'BLACK' })
-vim.cmd 'colorscheme jellybeans'
+vim.cmd 'colorscheme tairiki'
 --vim.cmd 'hi Cursor guifg=#303030 guibg=#00ff33' 
 --vim.cmd 'hi CursorLine guibg=#111144'
 --vim.cmd 'hi Normal guibg=#1c1c1c ctermbg=GREY'
@@ -221,3 +221,9 @@ end
 
 
 vim.keymap.set('n', '<A-h>', toggle_header_cpp, { desc = 'Switch between cpp and header file' })
+
+vim.lsp.set_log_level("error")
+
+vim.diagnostic.config({
+  virtual_text = { current_line = true }
+})

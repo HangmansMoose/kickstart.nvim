@@ -132,7 +132,7 @@ local function find_build_bat()
 end
 
 local build_project = function()
-  if vim.fn.expand('%:e') == 'cpp' then
+  if vim.fn.expand('%:e') == 'cpp' or vim.fn.expand('%:e') == 'c' or vim.fn.expand('%:e') == 'h' or vim.fn.expand('%:e') == 'hpp' then
 	local cwd = vim.fn.getcwd()
 	local changeDir = "cd " .. cwd .. "\r\n"
 	toggle_static_terminal()
@@ -174,5 +174,5 @@ vim.api.nvim_create_user_command('Floaterminal', toggle_floating_terminal, {})
 vim.api.nvim_create_user_command('StaticTerminal', toggle_static_terminal, {})
 vim.keymap.set({ 'n', 't' }, '<space>tf', toggle_floating_terminal)
 vim.keymap.set({ 'n', 't' }, '<space>t', toggle_static_terminal)
-vim.keymap.set({ 'n', 't' }, '<space>m', build_project)
-vim.keymap.set({ 'n', 't' }, '<space>bg', run_debug_bat)
+vim.keymap.set({ 'n', 't', 'i', 'v' }, '<M-m>', build_project)
+vim.keymap.set({ 'n', 't' }, '<M-d>', run_debug_bat)

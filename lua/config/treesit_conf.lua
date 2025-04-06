@@ -1,7 +1,7 @@
 require 'nvim-treesitter.install'.compilers = { "cl", "clang", "gcc" }
 
 require("nvim-treesitter.configs").setup {
-	ensure_installed =  { "python", "lua", "ocaml", "yaml", "json", 'c', 'cpp', 'c_sharp', 'markdown'},
+	ensure_installed =  { "python", "lua", "ocaml", "yaml", "toml", "json", 'c', 'cpp', 'c_sharp', 'markdown'},
   	auto_install = true,
 	sync_install=false,
 

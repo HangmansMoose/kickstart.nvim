@@ -225,5 +225,7 @@ vim.keymap.set('n', '<A-h>', toggle_header_cpp, { desc = 'Switch between cpp and
 vim.lsp.set_log_level("error")
 
 vim.diagnostic.config({
-  virtual_text = { current_line = true }
+  virtual_lines = {
+	  current_line = true
+  }
 })

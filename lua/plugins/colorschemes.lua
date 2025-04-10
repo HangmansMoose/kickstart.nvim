@@ -10,19 +10,21 @@ return {
 		style = "dark",
 		italics = false,
 		flat_ui = true,
-		plugins = { all = true },
+		plugins = { all = false, auto = true },
 
 		on_highlights = function(hl, colors)
 			hl.Cursor = { bg = "#00ff33", fg = "#303030" }
 			hl.CursorLine = { bg = "#111144" }
 			hl.Comment = { fg = "#2f6b31" }
+			
 		end,
 
 		on_colors = function(c)
 			local light_bg = '#ffffff'
-			local dark_bg = "#121212"
+			local dark_bg = "#151515"
 			vim.o.background = 'dark'
 			c.background = vim.o.background == 'light' and light_bg or dark_bg
+			
 		end,
 	},
   },
@@ -257,37 +259,40 @@ return {
       }
     end,
   },
-  {
-    'nvim-lualine/lualine.nvim',
-    name = 'lualine',
-    config = function()
-      local auto = require 'lualine.themes.auto'
-      auto.normal.c.bg = '#181818'
-      auto.normal.c.fg = '#bdb395'
-      --auto.insert.c.bg = '#181818'
-      --auto.visual.c.bg = '#181818'
-      --auto.command.c.bg = '#181818'
-      -- auto.terminal.c.bg = '#181818'
-      --      powerline_dark.
+ {
+   'nvim-lualine/lualine.nvim',
+   name = 'lualine',
+   config = function()
+     local auto = require 'lualine.themes.auto'
+	 auto.normal.a.bg = '#2f6b31'
+	 auto.insert.a.bg = '#ffa71a'
+	 auto.normal.b.bg = '#161616'
+     auto.normal.c.bg = '#161616'
+     auto.normal.c.fg = '#bdb395'
+     --auto.insert.c.bg = '#161616'
+     --auto.visual.c.bg = '#161616'
+     --auto.command.c.bg = '#161616'
+     --auto.terminal.c.bg = '#161616'
+     --      powerline_dark.
 
-      require('lualine').setup {
-        options = {
-          globalstatus = true,
-          theme = auto,
-          --section_separators = '',
-          --component_separators = '',
-        },
-        sections = {
-          lualine_c = {
-            {
-              'filename',
-              path = 3,
-            },
-          },
-        },
-      }
-    end,
-  },
+     require('lualine').setup {
+       options = {
+         globalstatus = true,
+         theme = auto,
+         --section_separators = '',
+         --component_separators = '',
+       },
+       sections = {
+         lualine_c = {
+           {
+             'filename',
+             path = 3,
+           },
+         },
+       },
+     }
+   end,
+ },
 
   -- Highlight todo, notes, etc in comments
   {
